@@ -1,20 +1,20 @@
 package com.test.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-//import java.util.UUID;
+import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 public class Message {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     private String title;
     private String text;
     private String tag;
+
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private UUID slug;
 
     public Message() {
     }
@@ -23,6 +23,15 @@ public class Message {
         this.title = title;
         this.text = text;
         this.tag = tag;
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -39,14 +48,6 @@ public class Message {
 
     public String getText() {
         return text;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getTag() {
