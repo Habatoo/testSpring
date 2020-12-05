@@ -1,0 +1,8 @@
+package com.test.repos;
+
+import com.test.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepo extends JpaRepository<User, Long> {
+    User findByUsername(String username);
+}
