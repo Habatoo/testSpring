@@ -6,40 +6,35 @@ import java.util.UUID;
 @Entity
 public class Message {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Integer id;
 
-    private String title;
     private String text;
     private String tag;
 
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private UUID slug;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User author;
 
     public Message() {
     }
 
-    public Message(String title, String text, String tag) {
-        this.title = title;
+    public Message(String text, String tag, User user) {
+        this.author = user;
         this.text = text;
         this.tag = tag;
     }
 
-
-    public Long getId() {
-        return id;
+    public String getAuthorName() {
+        return author != null ? author.getUsername() : "<none>";
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public User getAuthor() {
+        return author;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
     public void setText(String text) {
@@ -48,6 +43,14 @@ public class Message {
 
     public String getText() {
         return text;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getTag() {

@@ -1,8 +1,10 @@
 package com.test.controller;
 
 import com.test.domain.Message;
+import com.test.domain.User;
 import com.test.repos.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +18,7 @@ public class MainController {
     private MessageRepo messageRepo;
 
     @GetMapping("/")
-    public String greeting(String name, Map<String, Object> model) {
+    public String greeting(Map<String, Object> model) {
         return "greeting";
     }
 
@@ -30,11 +32,17 @@ public class MainController {
     }
 
     @PostMapping("/main")
-    public String add(@RequestParam String title, @RequestParam String text, @RequestParam String tag, Map<String, Object> model) {
-        Message message = new Message(title, text, tag);
+    public String add(
+            @AuthenticationPrincipal User user,
+            @RequestParam String text,
+            @RequestParam String tag, Map<String, Object> model
+    ) {
+        Message message = new Message(text, tag, user);
+
         messageRepo.save(message);
 
         Iterable<Message> messages = messageRepo.findAll();
+
         model.put("messages", messages);
 
         return "main";
