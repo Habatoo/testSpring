@@ -3,6 +3,7 @@
 
 <@c.page>
 Login page
+${message!" "}
 <@l.login "/login" />
 <div>
 <a href="/registration">Add new user</a>
